@@ -44,7 +44,11 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-  res.send('logout')
+  //此為Passport提供的函式，會幫忙清除Session
+  req.logout()
+  //登出之後，把使用者帶回登入頁面
+  req.flash('success_msg', '你已經成功登出。')
+  res.redirect('/users/login')
 })
 
 module.exports = router
