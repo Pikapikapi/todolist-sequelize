@@ -16,8 +16,25 @@ router.get('/register', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-  const { name, email, password } = req.body
-  User.create({ name, email, password }).then((user) => res.render('register'))
+  const { name, email, password, confirmpassword } = req.body
+
+  User.findOne({ where: { email } }).then((user) => {
+    if (user) {
+      console.log('user already exists')
+      return res.render('register', {
+        name,
+        email,
+        password,
+        confirmpassword,
+      })
+    }
+    return bcrypt
+      .genSalt(10)
+      .then((salt) => bcrypt.hash(password, salt))
+      .then((hash) => User.create({ name, email, password: hash }))
+      .then(() => res.redirect('/'))
+      .catch((error) => console.log(error))
+  })
 })
 
 router.get('/logout', (req, res) => {
