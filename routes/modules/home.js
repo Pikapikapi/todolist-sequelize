@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
     nest: true,
   })
     .then((todos) => {
-      console.log(todos)
       return res.render('index', { todos: todos })
     })
     .catch((error) => {

@@ -9,7 +9,7 @@ const users = require('./modules/users')
 //網址結構符合 / 字串的request導向home模組
 //條件越寬鬆的往頁，要往越後面放，因為讀取還是有序的
 router.use('/users', users)
-// router.use('/todos', todos)
+router.use('/todos', todos)
 router.use('/', home)
 
 module.exports = router
